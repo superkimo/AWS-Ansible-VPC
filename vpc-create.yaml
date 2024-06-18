@@ -103,6 +103,18 @@
           Environment: "Production"
       register: private_subnet3
 
+
+
+
+    - name: Create an Internet Gateway
+      amazon.aws.ec2_vpc_igw:
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        state: present
+        tags:
+          Name: "MY_ANSIBLE_IGW"
+      register: internet_gateway  
+
     - name: Print VPC and Subnet IDs
       debug:
         msg: |
@@ -112,4 +124,5 @@
           Public Subnet 3 ID: {{ public_subnet3.subnet.id }}
           Private Subnet 1 ID: {{ private_subnet1.subnet.id }}
           Private Subnet 2 ID: {{ private_subnet2.subnet.id }}
-          Private Subnet 3 ID: {{ private_subnet3.subnet.id }}    
+          Private Subnet 3 ID: {{ private_subnet3.subnet.id }} 
+          Internet Gateway ID: {{ internet_gateway.gateway.id }}   
