@@ -104,16 +104,16 @@
       register: private_subnet3
 
 
-
-
-    - name: Create an Internet Gateway
-      community.aws.ec2_vpc_igw:
+    - name: Attach Internet Gateway to VPC
+      amazon.aws.ec2_vpc_igw:
         vpc_id: "{{ vpc_id }}"
+        igw_id: "{{ internet_gateway.id }}"
         region: "{{ region }}"
         tags:
-          Name: "MY_ANSIBLE_IGW"
+          Name: "IGW"
         state: present
-      register: internet_gateway 
+
+   
 
     - name: Print VPC and Subnet IDs
       debug:
