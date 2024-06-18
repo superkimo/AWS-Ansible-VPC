@@ -127,7 +127,7 @@
         state: present
         subnet_id: "{{ public_subnet1.subnet.id }}"
         wait: true
-        region: "{{ vpc_id }}"
+        region: "{{ region }}"
         if_exist_do_not_create: true
       register: nat_gateway
 
