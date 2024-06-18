@@ -107,13 +107,13 @@
 
 
     - name: Create an Internet Gateway
-      amazon.aws.ec2_vpc_igw:
+      community.aws.ec2_vpc_igw:
         vpc_id: "{{ vpc_id }}"
         region: "{{ region }}"
-        state: present
         tags:
           Name: "MY_ANSIBLE_IGW"
-      register: internet_gateway  
+        state: present
+      register: internet_gateway 
 
     - name: Print VPC and Subnet IDs
       debug:
