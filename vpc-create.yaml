@@ -121,6 +121,20 @@
             gateway_id: "{{ igw.gateway_id }}"
       register: public_RT
 
+
+    - name: Create new nat gateway and allocate new EIP if a nat gateway does not yet exist in the subnet.
+      amazon.aws.ec2_vpc_nat_gateway:
+        state: present
+        subnet_id: "{{ public_subnet1.subnet.id }}"
+        wait: true
+        region: "{{ vpc_id }}"
+        if_exist_do_not_create: true
+      register: nat_gateway
+
+     - name: Debug Internet Gateway
+      debug:
+        var: nat_gateway
+
     - name: Print VPC and Subnet IDs
       debug:
         msg: |
