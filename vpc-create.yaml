@@ -104,13 +104,12 @@
 
     - name: Change the VPC the gateway is attached to
       amazon.aws.ec2_vpc_igw:
-        internet_gateway_id: "{{igw.gateway_id}}"
+        internet_gateway_id: "{{ igw.internet_gateway.id }}"
         region: "{{ region }}"
         vpc_id: "{{ vpc_id }}"
         force_attach: true
         state: present
-      register: igw
-
+      register: igw_attach
 
     - name: Print VPC and Subnet IDs
       debug:
@@ -122,4 +121,4 @@
           Private Subnet 1 ID: {{ private_subnet1.subnet.id }}
           Private Subnet 2 ID: {{ private_subnet2.subnet.id }}
           Private Subnet 3 ID: {{ private_subnet3.subnet.id }}
-          Internet Gateway ID: {{ igw.internet_gateway.id }}
+          Internet Gateway ID: {{ igw.internet_gateway.id if igw is defined and igw.internet_gateway is defined else 'N/A' }}
