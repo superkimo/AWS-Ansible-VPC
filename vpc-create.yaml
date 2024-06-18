@@ -1,0 +1,28 @@
+# create_vpc.yml
+- name: Create AWS VPC
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Include VPC variables
+      include_vars: vpc-setup
+
+    - name: Create a VPC
+      amazon.aws.ec2_vpc_net:
+        name: "{{ vpc_name }}"
+        cidr_block: "{{ vpcCidr }}"
+        region: "{{ region }}"
+        dns_support: yes
+        dns_hostnames: yes
+        tenancy: default
+        state: present
+      register: vpc
+
+    - name: Store the VPC ID
+      set_fact:
+        vpc_id: "{{ vpc.vpc.id }}"
+
+    - name: Print VPC ID
+      debug:
+        msg: "The VPC ID is {{ vpc_id }}"
