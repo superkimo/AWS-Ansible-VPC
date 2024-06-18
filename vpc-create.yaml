@@ -1,4 +1,3 @@
-# create_vpc.yml
 - name: Create AWS VPC
   hosts: localhost
   connection: local
@@ -26,7 +25,6 @@
     - name: Print VPC ID
       debug:
         msg: "The VPC ID is {{ vpc_id }}"
-
 
     - name: Create the first public subnet
       amazon.aws.ec2_vpc_subnet:
@@ -103,9 +101,8 @@
           Environment: "Production"
       register: private_subnet3
 
-
     - name: Create an Internet Gateway
-      ec2_vpc_igw:
+      amazon.aws.ec2_vpc_igw:
         vpc_id: "{{ vpc_id }}"
         region: "{{ region }}"
         tags:
@@ -114,13 +111,11 @@
       register: internet_gateway
 
     - name: Attach Internet Gateway to VPC
-      ec2_vpc_igw:
+      amazon.aws.ec2_vpc_igw:
         vpc_id: "{{ vpc_id }}"
         igw_id: "{{ internet_gateway.internet_gateway.id }}"
         region: "{{ region }}"
-        state: present 
-
-   
+        state: present
 
     - name: Print VPC and Subnet IDs
       debug:
@@ -131,5 +126,5 @@
           Public Subnet 3 ID: {{ public_subnet3.subnet.id }}
           Private Subnet 1 ID: {{ private_subnet1.subnet.id }}
           Private Subnet 2 ID: {{ private_subnet2.subnet.id }}
-          Private Subnet 3 ID: {{ private_subnet3.subnet.id }} 
-          Internet Gateway ID: {{ internet_gateway.gateway.id }}   
+          Private Subnet 3 ID: {{ private_subnet3.subnet.id }}
+          Internet Gateway ID: {{ internet_gateway.internet_gateway.id }}
