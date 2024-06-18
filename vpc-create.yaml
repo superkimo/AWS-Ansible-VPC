@@ -121,4 +121,4 @@
           Private Subnet 1 ID: {{ private_subnet1.subnet.id }}
           Private Subnet 2 ID: {{ private_subnet2.subnet.id }}
           Private Subnet 3 ID: {{ private_subnet3.subnet.id }}
-          Internet Gateway ID: {{ internet_gateway.internet_gateway.id }}
+          Internet Gateway ID: {{ igw.internet_gateway.id }}
