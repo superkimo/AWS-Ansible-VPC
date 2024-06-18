@@ -6,7 +6,7 @@
 
   tasks:
     - name: Include VPC variables
-      include_vars: vpc-setup
+      include_vars: vpc-setup.yml
 
     - name: Create a VPC
       amazon.aws.ec2_vpc_net:
