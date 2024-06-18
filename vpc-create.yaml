@@ -131,6 +131,21 @@
         if_exist_do_not_create: true
       register: nat_gateway
 
+    - name: Setup Private route table
+      amazon.aws.ec2_vpc_route_table:
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        tags:
+          Name: Private-RT
+        subnets:
+          - "{{ private_subnet1.subnet.id }}"
+          - "{{ private_subnet2.subnet.id }}"
+          - "{{ private_subnet3.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ nat_gateway.nat_gateway_id }}"
+      register: private_RT
+
 
     - name: Print VPC and Subnet IDs
       debug:
