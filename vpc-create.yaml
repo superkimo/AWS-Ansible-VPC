@@ -6,12 +6,12 @@
 
   tasks:
     - name: Include VPC variables
-      include_vars: vpc-vars.yml
+      include_vars: vpc-setup
 
     - name: Create a VPC
       amazon.aws.ec2_vpc_net:
         name: "{{ vpc_name }}"
-        cidr_block: "{{ vpc_cidr }}"
+        cidr_block: "{{ vpcCidr }}"
         region: "{{ region }}"
         state: present
       register: vpc
@@ -27,7 +27,7 @@
     - name: Create the first public subnet
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{ vpc_id }}"
-        cidr: "{{ public_subnet1_cidr }}"
+        cidr: "{{ PubSub1Cidr }}"
         region: "{{ region }}"
         map_public: yes
         state: present
@@ -39,7 +39,7 @@
     - name: Create the second public subnet
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{ vpc_id }}"
-        cidr: "{{ public_subnet2_cidr }}"
+        cidr: "{{ PubSub2Cidr }}"
         region: "{{ region }}"
         map_public: yes
         state: present
@@ -51,7 +51,7 @@
     - name: Create the third public subnet
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{ vpc_id }}"
-        cidr: "{{ public_subnet3_cidr }}"
+        cidr: "{{ PubSub3Cidr }}"
         region: "{{ region }}"
         map_public: yes
         state: present
@@ -63,7 +63,7 @@
     - name: Create the first private subnet
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{ vpc_id }}"
-        cidr: "{{ private_subnet1_cidr }}"
+        cidr: "{{ PrivSub1Cidr }}"
         region: "{{ region }}"
         state: present
         tags:
@@ -74,7 +74,7 @@
     - name: Create the second private subnet
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{ vpc_id }}"
-        cidr: "{{ private_subnet2_cidr }}"
+        cidr: "{{ PrivSub2Cidr }}"
         region: "{{ region }}"
         state: present
         tags:
@@ -85,7 +85,7 @@
     - name: Create the third private subnet
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{ vpc_id }}"
-        cidr: "{{ private_subnet3_cidr }}"
+        cidr: "{{ PrivSub3Cidr }}"
         region: "{{ region }}"
         state: present
         tags:
