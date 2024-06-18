@@ -100,14 +100,15 @@
         tags:
           Name: "MY_ANSIBLE_IGW"
         state: present
-      register: internet_gateway
+      register: igw
 
-    - name: Attach Internet Gateway to VPC
+    - name: Change the VPC the gateway is attached to
       amazon.aws.ec2_vpc_igw:
+        internet_gateway_id: "{{igw.gateway_id}}"
         vpc_id: "{{ vpc_id }}"
-        igw_id: "{{ internet_gateway.internet_gateway.id }}"
-        region: "{{ region }}"
+        force_attach: true
         state: present
+      register: igw
 
 
     - name: Print VPC and Subnet IDs
