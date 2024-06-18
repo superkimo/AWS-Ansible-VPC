@@ -102,6 +102,26 @@
         state: present
       register: igw
     
+    
+
+    - name: Set up public subnet route table
+      amazon.aws.ec2_vpc_route_table:
+       vpc_id: "{{ vpc_id }}"
+       region: "{{ region }}"
+      tags:
+        Name: Public-RT
+      subnets:
+      - "{{ public_subnet1.subnet.id }}"
+      - "{{ public_subnet2.subnet.id  }}"
+      - "{{ public_subnet3.subnet.id  }}"
+      routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id }}"
+      register: public_RT
+
+
+
+
 
 
     - name: Print VPC and Subnet IDs
