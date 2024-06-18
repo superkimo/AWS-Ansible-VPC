@@ -109,6 +109,7 @@
         region: "{{ region }}"
         state: present
 
+
     - name: Print VPC and Subnet IDs
       debug:
         msg: |
