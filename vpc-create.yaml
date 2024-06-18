@@ -104,14 +104,14 @@
       register: private_subnet3
 
 
-    - name: Attach Internet Gateway to VPC
+    - name: Create an Internet Gateway
       ec2_vpc_igw:
         vpc_id: "{{ vpc_id }}"
-        igw_id: "{{ internet_gateway.id }}"
         region: "{{ region }}"
         tags:
-          Name: "IGW"
+          Name: "MY_ANSIBLE_IGW"
         state: present
+      register: internet_gateway
 
    
 
