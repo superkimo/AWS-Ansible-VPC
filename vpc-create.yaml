@@ -105,6 +105,7 @@
     - name: Change the VPC the gateway is attached to
       amazon.aws.ec2_vpc_igw:
         internet_gateway_id: "{{igw.gateway_id}}"
+        region: "{{ region }}"
         vpc_id: "{{ vpc_id }}"
         force_attach: true
         state: present
