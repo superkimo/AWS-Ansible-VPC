@@ -114,7 +114,7 @@
       register: internet_gateway
 
     - name: Attach Internet Gateway to VPC
-      amazon.aws.ec2_vpc_igw:
+      ec2_vpc_igw:
         vpc_id: "{{ vpc_id }}"
         igw_id: "{{ internet_gateway.internet_gateway.id }}"
         region: "{{ region }}"
