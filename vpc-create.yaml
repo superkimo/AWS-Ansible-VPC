@@ -145,8 +145,7 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{ nat_gateway.nat_gateway_id }}"
       register: private_RT
-
-
+    
     - name: Print VPC and Subnet IDs
       debug:
         msg: |
@@ -158,3 +157,29 @@
           Private Subnet 2 ID: {{ private_subnet2.subnet.id }}
           Private Subnet 3 ID: {{ private_subnet3.subnet.id }}
           Internet Gateway ID: {{ igw.gateway_id if igw is defined else 'N/A' }}
+          pubRTid: "{{ public_RT.route_table.id }}"
+          NATGWid: "{{ nat_gateway.nat_gateway_id }}"
+          privRTid: "{{ private_RT.route_table.id }}"
+
+    - name: Create a variable to store all IDs
+      set_fact:
+        ids_info: |
+          VPC ID: {{ vpc_id }}
+          Public Subnet 1 ID: {{ public_subnet1.subnet.id }}
+          Public Subnet 2 ID: {{ public_subnet2.subnet.id }}
+          Public Subnet 3 ID: {{ public_subnet3.subnet.id }}
+          Private Subnet 1 ID: {{ private_subnet1.subnet.id }}
+          Private Subnet 2 ID: {{ private_subnet2.subnet.id }}
+          Private Subnet 3 ID: {{ private_subnet3.subnet.id }}
+          Internet Gateway ID: {{ igw.gateway_id if igw is defined else 'N/A' }}
+          pubRTid: "{{ public_RT.route_table.id }}"
+          NATGWid: "{{ nat_gateway.nat_gateway_id }}"
+          privRTid: "{{ private_RT.route_table.id }}"
+          cacheable: yes
+
+    - name: Write IDs to a file
+      copy:
+        content: "{{ ids_info }}"
+        dest: out_IDs
+
+    
