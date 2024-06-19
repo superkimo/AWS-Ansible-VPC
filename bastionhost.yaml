@@ -25,15 +25,5 @@
             rule_desc: allow all on port 22
       register: sg_bastion     
 
-    - name: Launch bastion host instance
-      amazon.aws.ec2_instance:
-        name: bastion_host
-        key_name: karim.pem
-        instance_type: t2.micro
-        image_id: "{{ bastion_ami }}"
-        region: "{{ region }}"
-        vpc_subnet_id: "{{ public_subnet1.subnet.id }}"
-        security_group: "{{ bastion_sg.group_id }}"
-        assign_public_ip: yes
-      register: bastion_instance  
+  
 
