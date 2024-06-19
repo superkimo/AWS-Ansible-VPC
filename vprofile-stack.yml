@@ -25,7 +25,7 @@
     when: key_out.changed
 
   - name: Create Securiry Group for Load Balancer
-      ec2_group:
+      amazon.aws.ec2_security_group:
         name: vproELB-sg
         description: Allow port 80 from everywhere and all port within sg
         region: "{{region}}"
@@ -38,7 +38,7 @@
       register: vproELBSG_out
 
     - name: Create Securiry Group for Vprofile Stack
-      ec2_group:
+      amazon.aws.ec2_security_group:
         name: vproStack-sg
         description: Allow port 22 from everywhere and all port within sg
         region: "{{region}}"
