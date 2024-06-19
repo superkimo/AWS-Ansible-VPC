@@ -44,6 +44,11 @@
             rule_desc: allow all on port 22
       register: sg_bastion
 
+    - name: Print VPC and Subnet IDs
+      debug:
+        msg: |
+          bastionsgid: "{{ sg_bastion.group_id }}"" 
+
     - name: Create Bastion Host
       amazon.aws.ec2_instance:
        key_name: bastion-key
