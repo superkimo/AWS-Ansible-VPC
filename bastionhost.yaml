@@ -47,7 +47,7 @@
     - name: Print VPC and Subnet IDs
       debug:
         msg: |
-          bastionsgid: "{{ sg_bastion.group_id }}"" 
+          bastionsgid: "{{ sg_bastion.group_id }}"
 
     - name: Create Bastion Host
       amazon.aws.ec2_instance:
