@@ -160,6 +160,7 @@
           pubRTid: "{{ public_RT.route_table.id }}"
           NATGWid: "{{ nat_gateway.nat_gateway_id }}"
           privRTid: "{{ private_RT.route_table.id }}"
+          bastionsgid: "{{ sg_bastion.group_id }}"
 
     - name: Create a variable to store all IDs
       set_fact:
@@ -175,6 +176,7 @@
           pubRTid: "{{ public_RT.route_table.id }}"
           NATGWid: "{{ nat_gateway.nat_gateway_id }}"
           privRTid: "{{ private_RT.route_table.id }}"
+          bastionsgid: "{{ sg_bastion.group_id }}"
           cacheable: yes
 
     - name: Write IDs to a file
