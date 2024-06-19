@@ -49,6 +49,11 @@
         msg: |
           bastionsgid: "{{ sg_bastion.group_id }}"
 
+    - name: Create a variable to SG for bastion
+      set_fact:
+        ids_info: |
+          bastionsgid: "{{ sg_bastion.group_id }}" 
+
     - name: Create Bastion Host
       amazon.aws.ec2_instance:
        key_name: bastion-key
