@@ -1,12 +1,12 @@
-VPC ID: vpc-094f35600a633a170
-Public Subnet 1 ID: subnet-0500aa02ae788a103
-Public Subnet 2 ID: subnet-01f96aa119729bce9
-Public Subnet 3 ID: subnet-0aaef807915cd823d
-Private Subnet 1 ID: subnet-04d49227cf0809db1
-Private Subnet 2 ID: subnet-0a5024533b87752c5
-Private Subnet 3 ID: subnet-0fb1235cbc7a0ef19
-Internet Gateway ID: igw-03975c8fdf4e8a03a
+vpcid: vpc-094f35600a633a170
+publicsubnet1: subnet-0500aa02ae788a103
+publicsubnet2: subnet-01f96aa119729bce9
+publicsubnet3: subnet-0aaef807915cd823d
+privatesubnet1: subnet-04d49227cf0809db1
+privatesubnet2: subnet-0a5024533b87752c5
+privatesubnet3: subnet-0fb1235cbc7a0ef19
+internetgateway: igw-03975c8fdf4e8a03a
 pubRTid: "rtb-068f8f88b41fbc95a"
-NATGWid: "nat-083ed847a29cc9f4f"
+NATGWid: "nat-0d62993f9cf5d5d08"
 privRTid: "rtb-02b89ab712bc47011"
 cacheable: yes
