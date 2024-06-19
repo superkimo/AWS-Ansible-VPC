@@ -149,7 +149,7 @@
     - name: Print VPC and Subnet IDs
       debug:
         msg: |
-          VPC ID: {{ vpc_id }}
+          VPC_ID: {{ vpc_id }}
           Public Subnet 1 ID: {{ public_subnet1.subnet.id }}
           Public Subnet 2 ID: {{ public_subnet2.subnet.id }}
           Public Subnet 3 ID: {{ public_subnet3.subnet.id }}
@@ -164,7 +164,7 @@
     - name: Create a variable to store all IDs
       set_fact:
         ids_info: |
-          VPC ID: {{ vpc_id }}
+          VPC_ID: {{ vpc_id }}
           Public Subnet 1 ID: {{ public_subnet1.subnet.id }}
           Public Subnet 2 ID: {{ public_subnet2.subnet.id }}
           Public Subnet 3 ID: {{ public_subnet3.subnet.id }}
