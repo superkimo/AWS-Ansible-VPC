@@ -11,6 +11,10 @@
     - name: Include out vars
       include_vars: out_IDs
 
+    - name: Include out vars
+      include_vars: vpc-setup
+
+
     - name: Create a security group for bastion host
       amazon.aws.ec2_security_group:
         name: sg_bastion
