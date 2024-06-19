@@ -14,7 +14,7 @@
     - name: Include out vars
       include_vars: vpc-setup
     
-    - name: Create vprofile ec2 key
+    - name: Create bastion ec2 key
       amazon.aws.ec2_key:
         name: bastion-key
         region: "{{region}}"
@@ -46,6 +46,7 @@
 
     - name: Create Bastion Host
       amazon.aws.ec2_instance:
+       key_name: bastion-key
        region: "{{ region }}"
        instance_type: t2.micro
        image_id: "{{ bastion_ami }}"
