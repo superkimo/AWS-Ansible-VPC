@@ -4,29 +4,29 @@
   gather_facts: no
 
   tasks:
-  - name: Include out vars
-    include_vars: out_IDs
+    - name: Include out vars
+      include_vars: out_IDs
 
-  - name: Include out vars
-    include_vars: vpc-setup
+    - name: Include out vars
+      include_vars: vpc-setup
 
-  - name: Create key for ec2 instances
-    amazon.aws.ec2_key:
-      name: vprofilestack-key
-      region: "{{region}}"
-    register: key_out
+    - name: Create key for ec2 instances
+      amazon.aws.ec2_key:
+        name: vprofilestack-key
+        region: "{{region}}"
+      register: key_out
 
-  - name: Save private key into file vprofilestack-key.pem
+    - name: Save private key into file vprofilestack-key.pem
+      copy:
+        content: "{{key_out.key.private_key}}"
+        dest: "./vprofilestack-key.pem"
+        mode: 0600
+      when: key_out.changed
 
-    copy:
-      content: "{{key_out.key.private_key}}"
-      dest: "./vprofilestack-key.pem"
-      mode: 0600
-    when: key_out.changed
-  - name: Create Securiry Group for Load Balancer
+    - name: Create Security Group for Load Balancer
       amazon.aws.ec2_security_group:
         name: vproELB-sg
-        description: Allow port 80 from everywhere and all port within sg
+        description: Allow port 80 from everywhere and all ports within sg
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
         rules:
@@ -36,14 +36,14 @@
             cidr_ip: 0.0.0.0/0
       register: vproELBSG_out
 
-    - name: Create Securiry Group for Vprofile Stack
-       amazon.aws.ec2_security_group:
-         name: vproStack-sg
-         description: Allow port 22 from everywhere and all port within sg
-         region: "{{region}}"
-         vpc_id: "{{vpcid}}"
-         purge_rules: no
-         rules:
+    - name: Create Security Group for Vprofile Stack
+      amazon.aws.ec2_security_group:
+        name: vproStack-sg
+        description: Allow port 22 from everywhere and all ports within sg
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        purge_rules: no
+        rules:
           - proto: tcp
             from_port: 80
             to_port: 80
@@ -53,4 +53,4 @@
             from_port: 22
             to_port: 22
             group_id: sg-0d7fd479182d106b7
-       register: vproStackSG_out  
+      register: vproStackSG_out
