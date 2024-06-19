@@ -34,7 +34,7 @@
        key_name: karim.pem
        region: "{{ region }}"
        instance_type: t2.micro
-       image_id: "{{ bastion_ami }}"
+       image_id: ami-033fabdd332044f06 
        wait: yes
        wait_timeout: 300
        tags: 
