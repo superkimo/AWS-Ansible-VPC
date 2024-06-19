@@ -19,7 +19,7 @@
       amazon.aws.ec2_security_group:
         name: sg_bastion
         description: Security group with rule descriptions
-        vpc_id: ""{{ vpcid }}""
+        vpc_id: "{{ vpcid }}"
         region: "{{ region }}"
         rules:
           - proto: tcp
