@@ -1,0 +1,3 @@
+---
+- imort_playbook: vpc-creat.yaml
+- import_playbook: bastionhost.yaml
