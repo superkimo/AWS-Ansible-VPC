@@ -31,7 +31,6 @@
 
     - name: Create Bastion Host
       amazon.aws.ec2_instance:
-       key_name: karim.pem
        region: "{{ region }}"
        instance_type: t2.micro
        image_id: ami-08a0d1e16fc3f61ea
