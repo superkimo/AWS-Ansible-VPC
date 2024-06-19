@@ -19,7 +19,7 @@
       amazon.aws.ec2_security_group:
         name: sg_bastion
         description: Security group with rule descriptions
-        vpc_id: vpc-094f35600a633a170
+        vpc_id: ""{{ vpcid }}""
         region: "{{ region }}"
         rules:
           - proto: tcp
@@ -33,7 +33,7 @@
       amazon.aws.ec2_instance:
        region: "{{ region }}"
        instance_type: t2.micro
-       image_id: ami-08a0d1e16fc3f61ea
+       image_id: "{{ bastion_ami }}"
        wait: yes
        wait_timeout: 300
        tags: 
@@ -42,6 +42,6 @@
         Owner: DevOps Team
        exact_count: 1
        security_group: "{{ sg_bastion.group_id }}"
-       vpc_subnet_id: subnet-0500aa02ae788a103
+       vpc_subnet_id: "{{ publicsubnet1 }}"
       register: bastionHost_out
  
