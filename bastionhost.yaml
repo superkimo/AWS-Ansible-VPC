@@ -1,5 +1,5 @@
 ---
-- name: create bastion host
+- name: Create bastion host
   hosts: localhost
   connection: local
   gather_facts: no
@@ -11,19 +11,16 @@
     - name: Include out vars
       include_vars: out_IDs
 
-    - name: create a security group for bastion host
+    - name: Create a security group for bastion host
       amazon.aws.ec2_security_group:
-        name: "{{ name }}"
-        description: sg with rule descriptions
+        name: "{{ bastion_sg_name }}"
+        description: Security group with rule descriptions
         vpc_id: "{{ vpc_id }}"
         region: "{{ region }}"
         rules:
           - proto: tcp
             ports:
-             - 22
+              - 22
             cidr_ip: 0.0.0.0/0
             rule_desc: allow all on port 22
-      register: sg_bastion     
-
-  
-
+      register: sg_bastion
