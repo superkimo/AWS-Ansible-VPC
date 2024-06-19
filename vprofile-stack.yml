@@ -23,7 +23,6 @@
       dest: "./vprofilestack-key.pem"
       mode: 0600
     when: key_out.changed
-
   - name: Create Securiry Group for Load Balancer
       amazon.aws.ec2_security_group:
         name: vproELB-sg
