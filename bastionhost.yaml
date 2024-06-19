@@ -13,6 +13,21 @@
 
     - name: Include out vars
       include_vars: vpc-setup
+    
+    - name: Create vprofile ec2 key
+      amazon.aws.ec2_key:
+        name: bastion-key
+        region: "{{region}}"
+      register: key_out
+
+
+    - name: Save private key into file bastion-key.pem
+      copy:
+        content: "{{key_out.key.private_key}}"
+        dest: "./bastion-key.pem"
+        mode: 0600
+      when: key_out.changed
+
 
 
     - name: Create a security group for bastion host
