@@ -13,7 +13,7 @@
 
     - name: Create a security group for bastion host
       amazon.aws.ec2_security_group:
-        name: "{{ bastion_sg_name }}"
+        name: sg_bastion
         description: Security group with rule descriptions
         vpc_id: "{{ vpc_id }}"
         region: "{{ region }}"
