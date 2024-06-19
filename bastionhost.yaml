@@ -54,6 +54,11 @@
         ids_info: |
           bastionsgid: "{{ sg_bastion.group_id }}" 
 
+    - name: Write IDs to a file
+      copy:
+        content: "{{ ids_info }}"
+        dest: out_IDs      
+
     - name: Create Bastion Host
       amazon.aws.ec2_instance:
        key_name: bastion-key
