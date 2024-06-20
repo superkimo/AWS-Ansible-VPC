@@ -157,4 +157,5 @@
           Port: 80 # Required. The port on which the load balancer is listening.
           DefaultActions:
             - Type: forward  
+              TargetGroupName: mytarget
 
