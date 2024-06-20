@@ -143,20 +143,20 @@
 
   
 
-    - name: Create ELB
-      local_action:
-        module: amazon.aws.elb_application_lb
-        name: "vprofile-elb"
-        region: "{{region}}"
-        state: present
-        security_groups: 
-          - "{{ vproELBSG_out.group_id }}"
-        subnets:
-          - "{{ publicsubnet1 }}"
-          - "{{ publicsubnet2 }}"
-          - "{{ publicsubnet3 }}"
-        listeners:
-          - port: 80
-            protocol: HTTP
-        tags:
-          Name: vprofile-elb
+    - name: Create vprofile-elb
+      amazon.aws.elb_application_lb:
+      name: "vprofile-elb"
+      region: "{{ region }}"
+      state: present
+      security_groups:
+        - "{{ vproELBSG_out.group_id }}"
+      subnets:
+        - "{{ publicsubnet1 }}"  # Ensure these subnets are spread across AZs
+        - "{{ publicsubnet2 }}"
+        - "{{ publicsubnet3 }}"
+      listeners:
+        - port: 80
+          protocol: HTTP
+        # Add health checks here (refer to Ansible documentation for details)
+      tags:
+        Name: vprofile-elb
