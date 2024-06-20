@@ -143,21 +143,15 @@
 
   
 
-    - name: Create vprofile-elb
-      amazon.aws.elb_application_lb:
-        name: "vprofile-elb"  # Replace with your desired ELB name
-        region: "{{ region }}"  # Replace with your AWS region
-        state: present
-        security_groups:
-         - "{{ vproELBSG_out.group_id }}"  # Replace with your security group ID
-        subnets:
-         - "{{ publicsubnet1 }}"  # Ensure these subnets are spread across AZs
-         - "{{ publicsubnet2 }}"
-         - "{{ publicsubnet3 }}"
-        listeners:
-         - port: 80  # Port for incoming traffic
-           protocol: HTTP  # Protocol for incoming traffic
-    # Add health checks here (refer to Ansible documentation for details)
-         tags:
-           Name: vprofile-elb  # ELB name can be used as a tag
+    - amazon.aws.elb_application_lb:
+       name: myalb
+       security_groups:
+        - sg-07aa1c9f40a13e570
+        
+       subnets:
+        -  subnet-0500aa02ae788a103
+      
+       listeners:
+        - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
+          Port: 80 # Required. The port on which the load balancer is listening.
 
