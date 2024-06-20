@@ -141,42 +141,21 @@
       debug:
         msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
 
-    - name: Create Target Group
-      amazon.aws.elb_target_group:
-        name: vprofile-target-group
-        protocol: HTTP
-        port: 80
-        vpc_id: "{{ vpcid }}"
-        health_check_protocol: HTTP
-        health_check_port: 80
-        health_check_path: /
-        state: present
-        region: "{{ region }}"
-      register: target_group_out
+  
 
-    - name: Register Instances with Target Group
-      amazon.aws.elb_target:
-        target_group_arn: "{{ target_group_out.target_group_arn }}"
-        targets:
-          - Id: "{{ web01_out.instance_ids[0] }}"
-            Port: 80
-        state: present
-        region: "{{ region }}"
-
-    - name: Create ALB
-      amazon.aws.elb_application_lb:
+    - name: Create ELB
+      local_action:
+        module: amazon.aws.elb_application_lb
         name: "vprofile-elb"
-        region: "{{ region }}"
+        region: "{{region}}"
         state: present
+        security_groups: 
+          - "{{ vproELBSG_out.group_id }}"
         subnets:
           - "{{ publicsubnet1 }}"
           - "{{ publicsubnet2 }}"
           - "{{ publicsubnet3 }}"
-        security_groups:
-          - "{{ vproELBSG_out.group_id }}"
         listeners:
-          - protocol: HTTP
+          - protocol: http # options are http, https, ssl, tcp
             load_balancer_port: 80
-            default_actions:
-              - type: forward
-                target_group_arn: "{{ target_group_out.target_group_arn }}"
+            instance_port: 80
