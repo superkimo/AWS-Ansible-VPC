@@ -140,3 +140,21 @@
     - name: Print the instance ID
       debug:
          msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
+
+    - local_action:
+      module: ec2_elb_lb
+      name: "vprofile-elb"
+      region: "{{region}}"
+      state: present
+      instance_ids:
+          - "{{ web01_out.instance_ids[0] }}"
+      purge_instance_ids: true
+      security_group_ids: "{{ vproELBSG_out.group_id }}"
+      subnets:
+          - "{{ publicsubnet1 }}"
+          - "{{ publicsubnet2 }}"
+          - "{{ publicsubnet3 }}"
+      listeners:
+          - protocol: http # options are http, https, ssl, tcp
+            load_balancer_port: 80
+            instance_port: 80     
