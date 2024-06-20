@@ -16,12 +16,12 @@
     - name: Create key for ec2 instances
       amazon.aws.ec2_key:
         name: vprofilestack-key
-        region: "{{region}}"
+        region: "{{ region }}"
       register: key_out
 
     - name: Save private key into file vprofilestack-key.pem
       copy:
-        content: "{{key_out.key.private_key}}"
+        content: "{{ key_out.key.private_key }}"
         dest: "./vprofilestack-key.pem"
         mode: 0600
       when: key_out.changed
@@ -30,8 +30,8 @@
       amazon.aws.ec2_security_group:
         name: vproELB-sg
         description: Allow port 80 from everywhere and all ports within sg
-        region: "{{region}}"
-        vpc_id: "{{vpcid}}"
+        region: "{{ region }}"
+        vpc_id: "{{ vpcid }}"
         rules:
           - proto: tcp
             from_port: 80
@@ -43,14 +43,14 @@
       amazon.aws.ec2_security_group:
         name: vproStack-sg
         description: Allow port 22 from everywhere and all ports within sg
-        region: "{{region}}"
-        vpc_id: "{{vpcid}}"
+        region: "{{ region }}"
+        vpc_id: "{{ vpcid }}"
         purge_rules: no
         rules:
           - proto: tcp
             from_port: 80
             to_port: 80
-            group_id: "{{vproELBSG_out.group_id}}"
+            group_id: "{{ vproELBSG_out.group_id }}"
           - proto: tcp
             from_port: 22
             to_port: 22
@@ -60,9 +60,9 @@
     - name: Creating Nginx web01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image_id: "{{nginx_ami}}"
+        image_id: "{{ nginx_ami }}"
         wait: yes
         wait_timeout: 300
         tags:
@@ -70,15 +70,15 @@
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        vpc_subnet_id: "{{privatesubnet1}}"
+        vpc_subnet_id: "{{ privatesubnet1 }}"
       register: web01_out
 
     - name: Creating Tomcat app01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image_id: "{{tomcat_ami}}"
+        image_id: "{{ tomcat_ami }}"
         wait: yes
         wait_timeout: 300
         tags:
@@ -86,15 +86,15 @@
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        vpc_subnet_id: "{{privatesubnet1}}"
+        vpc_subnet_id: "{{ privatesubnet1 }}"
       register: app01_out
 
     - name: Creating Memcache mc01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image_id: "{{memcache_ami}}"
+        image_id: "{{ memcache_ami }}"
         wait: yes
         wait_timeout: 300
         tags:
@@ -102,15 +102,15 @@
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        vpc_subnet_id: "{{privatesubnet1}}"
+        vpc_subnet_id: "{{ privatesubnet1 }}"
       register: mc01_out
 
     - name: Creating RabbitMQ rmq01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image_id: "{{rmq_ami}}"
+        image_id: "{{ rmq_ami }}"
         wait: yes
         wait_timeout: 300
         tags:
@@ -118,15 +118,15 @@
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        vpc_subnet_id: "{{privatesubnet1}}"
+        vpc_subnet_id: "{{ privatesubnet1 }}"
       register: rmq01_out
 
     - name: Creating MySQL db01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
-        region: "{{region}}"
+        region: "{{ region }}"
         instance_type: t2.micro
-        image_id: "{{mysql_ami}}"
+        image_id: "{{ mysql_ami }}"
         wait: yes
         wait_timeout: 300
         tags:
@@ -134,27 +134,28 @@
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        vpc_subnet_id: "{{privatesubnet1}}"
+        vpc_subnet_id: "{{ privatesubnet1 }}"
       register: db01_out
 
     - name: Print the instance ID
       debug:
-         msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
+        msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
 
     - name: Create ELB
       amazon.aws.elb_application_lb:
-      name: "vprofile-elb"
-      region: "{{region}}"
-      state: present
-      instance_ids:
+        name: "vprofile-elb"
+        region: "{{ region }}"
+        state: present
+        instance_ids:
           - "{{ web01_out.instance_ids[0] }}"
-      purge_instance_ids: true
-      security_group_ids: "{{ vproELBSG_out.group_id }}"
-      subnets:
+        purge_instance_ids: true
+        security_group_ids:
+          - "{{ vproELBSG_out.group_id }}"
+        subnets:
           - "{{ publicsubnet1 }}"
           - "{{ publicsubnet2 }}"
           - "{{ publicsubnet3 }}"
-      listeners:
+        listeners:
           - protocol: http # options are http, https, ssl, tcp
             load_balancer_port: 80
-            instance_port: 80     
+            instance_port: 80
