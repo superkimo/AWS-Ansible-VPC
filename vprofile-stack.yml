@@ -137,5 +137,6 @@
         vpc_subnet_id: "{{privatesubnet1}}"
       register: db01_out
 
-    - debug:
-        var: db01_out
+    - name: Print the instance ID
+      debug:
+         msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
