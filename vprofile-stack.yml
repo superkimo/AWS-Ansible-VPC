@@ -145,6 +145,7 @@
 
     - amazon.aws.elb_application_lb:
        name: myalb
+       region: "{{ region }}"
        security_groups:
         - sg-07aa1c9f40a13e570
         
