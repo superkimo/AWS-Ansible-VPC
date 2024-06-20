@@ -51,7 +51,6 @@
             from_port: 80
             to_port: 80
             group_id: "{{vproELBSG_out.group_id}}"
-
           - proto: tcp
             from_port: 22
             to_port: 22
@@ -66,16 +65,11 @@
         image: "{{nginx_ami}}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           Name: "web01"
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        count_tag:
-          Name: "web01"
-          Project: Vprofile
-          Owner: DevOps Team
-        group_id: "{{vproStackSG_out.group_id}}"
         vpc_subnet_id: "{{privatesubnet1}}"
       register: web01_out
 
@@ -87,16 +81,11 @@
         image: "{{tomcat_ami}}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           Name: "app01"
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        count_tag:
-          Name: "app01"
-          Project: Vprofile
-          Owner: DevOps Team
-        group_id: "{{vproStackSG_out.group_id}}"
         vpc_subnet_id: "{{privatesubnet1}}"
       register: app01_out
 
@@ -108,16 +97,11 @@
         image: "{{memcache_ami}}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           Name: "mc01"
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        count_tag:
-          Name: "mc01"
-          Project: Vprofile
-          Owner: DevOps Team
-        group_id: "{{vproStackSG_out.group_id}}"
         vpc_subnet_id: "{{privatesubnet1}}"
       register: mc01_out
 
@@ -129,16 +113,11 @@
         image: "{{rmq_ami}}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           Name: "rmq01"
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        count_tag:
-          Name: "rmq01"
-          Project: Vprofile
-          Owner: DevOps Team
-        group_id: "{{vproStackSG_out.group_id}}"
         vpc_subnet_id: "{{privatesubnet1}}"
       register: rmq01_out
 
@@ -150,16 +129,11 @@
         image: "{{mysql_ami}}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           Name: "db01"
           Project: Vprofile
           Owner: DevOps Team
         exact_count: 1
-        count_tag:
-          Name: "db01"
-          Project: Vprofile
-          Owner: DevOps Team
-        group_id: "{{vproStackSG_out.group_id}}"
         vpc_subnet_id: "{{privatesubnet1}}"
       register: db01_out
 
