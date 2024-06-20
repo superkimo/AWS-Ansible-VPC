@@ -151,7 +151,7 @@
         
        subnets:
         -  subnet-0500aa02ae788a103
-      
+        -  subnet-01f96aa119729bce9
        listeners:
         - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
           Port: 80 # Required. The port on which the load balancer is listening.
