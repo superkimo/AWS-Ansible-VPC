@@ -172,7 +172,7 @@
     - name: Write IPs to a file
       copy:
         content: "{{ ips_info }}"
-        dest: /provision-stack/group_vras/hostsip
+        dest: provision-stack/group_vras/hostsip
 
 
    
