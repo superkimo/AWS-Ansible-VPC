@@ -142,7 +142,7 @@
          msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
 
     - name: Create ELB:
-      module: ec2_elb_lb
+      amazon.aws.elb_application_lb:
       name: "vprofile-elb"
       region: "{{region}}"
       state: present
