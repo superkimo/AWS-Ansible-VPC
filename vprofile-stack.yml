@@ -57,9 +57,10 @@
             to_port: 22
             group_id: sg-0d7fd479182d106b7
       register: vproStackSG_out
+
     - name: Creating Nginx web01
       amazon.aws.ec2_instance:
-        key_name: vprokey
+        key_name: vprofilestack-key
         region: "{{region}}"
         instance_type: t2.micro
         image: "{{nginx_ami}}"
@@ -75,10 +76,10 @@
           Project: Vprofile
           Owner: DevOps Team
         group_id: "{{vproStackSG_out.group_id}}"
-        vpc_subnet_id: "{{ privatesubnet1 }}"
+        vpc_subnet_id: "{{privatesubnet1}}"
       register: web01_out
 
-    - name: Creating tomcat app01
+    - name: Creating Tomcat app01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
         region: "{{region}}"
@@ -96,10 +97,10 @@
           Project: Vprofile
           Owner: DevOps Team
         group_id: "{{vproStackSG_out.group_id}}"
-        vpc_subnet_id: "{{ privatesubnet1 }}"
+        vpc_subnet_id: "{{privatesubnet1}}"
       register: app01_out
 
-    - name: Creating memcache mc01
+    - name: Creating Memcache mc01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
         region: "{{region}}"
@@ -117,7 +118,7 @@
           Project: Vprofile
           Owner: DevOps Team
         group_id: "{{vproStackSG_out.group_id}}"
-        vpc_subnet_id: "{{ privatesubnet1 }}"
+        vpc_subnet_id: "{{privatesubnet1}}"
       register: mc01_out
 
     - name: Creating RabbitMQ rmq01
@@ -138,10 +139,10 @@
           Project: Vprofile
           Owner: DevOps Team
         group_id: "{{vproStackSG_out.group_id}}"
-        vpc_subnet_id: "{{ privatesubnet1 }}"
+        vpc_subnet_id: "{{privatesubnet1}}"
       register: rmq01_out
 
-    - name: Creating Mysql db01
+    - name: Creating MySQL db01
       amazon.aws.ec2_instance:
         key_name: vprofilestack-key
         region: "{{region}}"
@@ -159,7 +160,7 @@
           Project: Vprofile
           Owner: DevOps Team
         group_id: "{{vproStackSG_out.group_id}}"
-        vpc_subnet_id: "{{ privatesubnet1 }}"
+        vpc_subnet_id: "{{privatesubnet1}}"
       register: db01_out
 
     - debug:
