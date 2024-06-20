@@ -141,7 +141,7 @@
       debug:
          msg: "Instance ID: {{ db01_out.instance_ids[0] }}"
 
-    - local_action:
+    - name: Create ELB:
       module: ec2_elb_lb
       name: "vprofile-elb"
       region: "{{region}}"
