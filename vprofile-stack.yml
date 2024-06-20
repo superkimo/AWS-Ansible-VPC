@@ -147,7 +147,7 @@
        name: myalb
        region: "{{ region }}"
        security_groups:
-        - sg-07aa1c9f40a13e570
+        - "{{ vproELBSG_out.group_id }}"
         
        subnets:
         -  subnet-0500aa02ae788a103
