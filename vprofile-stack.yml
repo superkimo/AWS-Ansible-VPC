@@ -155,8 +155,9 @@
         - "{{ publicsubnet2 }}"
         - "{{ publicsubnet3 }}"
        listeners:
-        - port: 80
+        - Listener:
+          port: 80
           protocol: HTTP
         # Add health checks here (refer to Ansible documentation for details)
        tags:
-        Name: vprofile-elb
+         Name: vprofile-elb
